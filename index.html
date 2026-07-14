@@ -5,41 +5,130 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AutoGestão Pro - ERP com Gestão de Mecânicos</title>
     <!-- Tailwind CSS v4 -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4">
+    </script>
     <!-- FontAwesome para Ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Estilos Visuais do Padrão de Placas */
         .placa-container-form {
-            width: 100%; max-width: 320px; height: 100px; background-color: #fff;
-            border: 3px solid #000; border-radius: 8px; shadow: 0 4px 6px rgba(0,0,0,0.1);
-            position: relative; display: flex; flex-direction: column; overflow: hidden; margin: 0 auto;
+            width: 100%;
+            max-width: 320px;
+            height: 100px;
+            background-color: #fff;
+            border: 3px solid #000;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            margin: 0 auto;
         }
+
         .placa-header-form {
-            background-color: #003399; height: 26px; display: flex; align-items: center;
-            justify-content: space-between; padding: 0 8px; color: #fff; font-weight: bold; font-size: 11px; letter-spacing: 1px;
+            background-color: #003399;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8px;
+            color: #fff;
+            font-weight: bold;
+            font-size: 11px;
+            letter-spacing: 1px;
         }
-        .mercosul-txt-form { font-size: 7px; opacity: 0.8; }
-        .brasil-flag-form { width: 18px; height: auto; border-radius: 1px; }
-        .placa-body-form { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; background: #fdfdfd; }
-        .br-tag-form { position: absolute; left: 8px; bottom: 4px; font-size: 11px; font-weight: bold; color: #000; }
+
+        .mercosul-txt-form {
+            font-size: 7px;
+            opacity: 0.8;
+        }
+
+        .brasil-flag-form {
+            width: 18px;
+            height: auto;
+            border-radius: 1px;
+        }
+
+        .placa-body-form {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: #fdfdfd;
+        }
+
+        .br-tag-form {
+            position: absolute;
+            left: 8px;
+            bottom: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            color: #000;
+        }
+
         .placa-input-form {
-            width: 90%; background: transparent; border: none; outline: none; font-size: 30px;
-            font-weight: 900; font-family: 'Courier New', Courier, monospace; text-align: center; letter-spacing: 2px; text-transform: uppercase; color: #000;
+            width: 90%;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-size: 30px;
+            font-weight: 900;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #000;
         }
-        .placa-input-form::placeholder { color: #ccc; font-size: 24px; letter-spacing: 1px; }
+
+        .placa-input-form::placeholder {
+            color: #ccc;
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
 
         /* Miniatura nos Cards */
         .mini-placa {
-            width: 110px; height: 42px; background-color: #fff; border: 1.5px solid #000;
-            border-radius: 4px; display: flex; flex-direction: column; overflow: hidden; shadow: 0 1px 3px rgba(0,0,0,0.1);
+            width: 110px;
+            height: 42px;
+            background-color: #fff;
+            border: 1.5px solid #000;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
-        .mini-placa-header { background-color: #003399; height: 11px; display: flex; align-items: center; justify-content: space-between; padding: 0 4px; color: #fff; font-size: 5px; font-weight: bold; }
-        .mini-placa-body { flex: 1; display: flex; align-items: center; justify-content: center; background: #fff; font-family: 'Courier New', Courier, monospace; font-size: 13px; font-weight: 900; color: #000; letter-spacing: 0.5px; }
+
+        .mini-placa-header {
+            background-color: #003399;
+            height: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 4px;
+            color: #fff;
+            font-size: 5px;
+            font-weight: bold;
+        }
+
+        .mini-placa-body {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            font-weight: 900;
+            color: #000;
+            letter-spacing: 0.5px;
+        }
 
         /* CORREÇÃO DEFINITIVA DE IMPRESSÃO (SEM PÁGINAS EM BRANCO) */
         @media print {
-            body > *:not(#area-impressao-global) {
+            body>*:not(#area-impressao-global) {
                 display: none !important;
             }
             #area-impressao-global {
@@ -53,75 +142,273 @@
                 padding: 0 !important;
                 margin: 0 !important;
             }
-            @page { 
-                size: portrait; 
-                margin: 1.5cm; 
+            @page {
+                size: portrait;
+                margin: 1.5cm;
             }
+        }
+
+        /* Melhorias de UX: Toque e Feedback */
+        button,
+        select,
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        input[type="file"] {
+            cursor: pointer;
+            transition: all 0.15s ease-in-out;
+        }
+
+        /* Botão com texto completo - estilo melhorado */
+        .btn-com-texto {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+            width: 100%;
+            min-height: 44px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-com-texto i {
+            font-size: 1rem;
+        }
+
+        .btn-com-texto:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-com-texto:active {
+            transform: translateY(0px);
+        }
+
+        /* Ajuste para alvos de toque maiores em mobile */
+        @media (max-width: 640px) {
+            .placa-container-form {
+                max-width: 260px;
+                height: 85px;
+            }
+            .placa-input-form {
+                font-size: 26px;
+            }
+            .mini-placa {
+                width: 90px;
+                height: 36px;
+            }
+            .mini-placa-body {
+                font-size: 11px;
+            }
+            .btn-com-texto {
+                font-size: 0.7rem;
+                padding: 0.5rem 0.75rem;
+                min-height: 40px;
+            }
+            .btn-com-texto i {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Estilo do formulário de mecânicos em vertical */
+        .form-mecanicos-vertical {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .form-mecanicos-vertical .campo-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .form-mecanicos-vertical .campo-group label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #94a3b8;
+            letter-spacing: 0.5px;
+        }
+
+        .form-mecanicos-vertical .campo-group input {
+            width: 100%;
+            padding: 0.6rem 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            background: white;
+        }
+
+        .dark .form-mecanicos-vertical .campo-group input {
+            background: #1e293b;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+
+        .form-mecanicos-vertical .campo-group input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        /* Botões de ação vertical no modal de mecânicos */
+        .botoes-acao-mecanico {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .botoes-acao-mecanico .btn-acao {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            min-height: 44px;
+        }
+
+        .botoes-acao-mecanico .btn-acao i {
+            font-size: 1rem;
+        }
+
+        .botoes-acao-mecanico .btn-acao:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .botoes-acao-mecanico .btn-acao:active {
+            transform: translateY(0px);
+        }
+
+        .btn-wpp-mecanico {
+            background: #059669;
+            color: white;
+        }
+
+        .btn-wpp-mecanico:hover {
+            background: #047857;
+        }
+
+        .btn-pdf-mecanico {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-pdf-mecanico:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-excluir-mecanico {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .btn-excluir-mecanico:hover {
+            background: #fecaca;
+        }
+
+        .btn-padrao-mecanico {
+            background: #e2e8f0;
+            color: #475569;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 0.4rem 0.75rem;
+            border-radius: 0.5rem;
+            letter-spacing: 0.5px;
+            cursor: default;
+        }
+
+        .dark .btn-padrao-mecanico {
+            background: #334155;
+            color: #94a3b8;
         }
     </style>
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans min-h-screen transition-colors duration-200 dark:bg-slate-950 dark:text-slate-100">
 
     <!-- HEADER PRINCIPAL -->
-    <header class="bg-slate-950 text-white px-6 py-4 sticky top-0 z-40 shadow-md flex justify-between items-center border-b border-slate-800">
+    <header class="bg-slate-950 text-white px-4 sm:px-6 py-3 sticky top-0 z-40 shadow-md flex flex-wrap items-center justify-between gap-2 border-b border-slate-800">
         <div class="flex items-center gap-3">
             <i class="fa-solid fa-gears text-2xl text-blue-500"></i>
-            <h1 class="text-lg font-bold tracking-wider uppercase">AutoGestão <span class="text-blue-500">Pro</span></h1>
+            <h1 class="text-base sm:text-lg font-bold tracking-wider uppercase">AutoGestão <span class="text-blue-500">Pro</span></h1>
         </div>
-        <div class="flex items-center gap-3">
-            <button onclick="abrirModalMecanicos()" class="bg-slate-800 hover:bg-slate-700 text-xs font-semibold py-2 px-3 rounded cursor-pointer">
-                <i class="fa-solid fa-user-wrench mr-1"></i> Equipe
+        <div class="flex items-center gap-2 flex-wrap">
+            <button onclick="abrirModalMecanicos()" class="btn-com-texto bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-500 text-white" style="width: auto;">
+                <i class="fa-solid fa-user-wrench text-blue-400"></i> 
+                <span>Equipe</span>
             </button>
-            <button onclick="abrirModalRelatorios()" class="bg-blue-600 hover:bg-blue-700 text-xs font-semibold py-2 px-3 rounded cursor-pointer">
-                <i class="fa-solid fa-chart-line mr-1"></i> Relatórios / PDF
+            <button onclick="abrirModalRelatorios()" class="btn-com-texto bg-blue-600 hover:bg-blue-700 text-white shadow-sm hover:shadow" style="width: auto;">
+                <i class="fa-solid fa-chart-line"></i> 
+                <span>Relatórios</span>
             </button>
-            <button onclick="alternarTema()" class="bg-slate-800 hover:bg-slate-700 p-2 rounded text-sm cursor-pointer">
+            <button onclick="alternarTema()" class="btn-com-texto bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-500 text-white" style="width: auto; padding: 0.6rem 0.8rem;">
                 <i id="icone-tema" class="fa-solid fa-moon"></i>
             </button>
-            <div class="hidden md:flex gap-1">
-                <button onclick="exportarBackup()" class="bg-slate-800 hover:bg-slate-700 text-xs py-2 px-2 rounded cursor-pointer" title="Exportar dados"><i class="fa-solid fa-file-export"></i></button>
-                <button onclick="document.getElementById('input-backup').click()" class="bg-slate-800 hover:bg-slate-700 text-xs py-2 px-2 rounded cursor-pointer" title="Importar dados"><i class="fa-solid fa-file-import"></i></button>
+            <div class="flex gap-1">
+                <button onclick="exportarBackup()" class="btn-com-texto bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-500 text-white" style="width: auto; padding: 0.6rem 0.8rem;" title="Exportar dados">
+                    <i class="fa-solid fa-file-export"></i>
+                </button>
+                <button onclick="document.getElementById('input-backup').click()" class="btn-com-texto bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-500 text-white" style="width: auto; padding: 0.6rem 0.8rem;" title="Importar dados">
+                    <i class="fa-solid fa-file-import"></i>
+                </button>
                 <input type="file" id="input-backup" accept=".json" class="hidden" onchange="importarBackup(event)">
             </div>
         </div>
     </header>
 
     <!-- PAINEL SUPERIOR (ESTATÍSTICAS) -->
-    <section class="max-w-7xl mx-auto p-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mt-2">
-        <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-between">
-            <div><p class="text-xs text-slate-500 font-bold uppercase">No Pátio</p><h3 id="stat-total" class="text-2xl font-black">0</h3></div>
-            <i class="fa-solid fa-car text-slate-300 text-3xl"></i>
+    <section class="max-w-7xl mx-auto p-3 sm:p-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3 mt-2">
+        <div class="bg-white dark:bg-slate-900 p-3 sm:p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-between hover:shadow-md transition">
+            <div><p class="text-[10px] sm:text-xs text-slate-500 font-bold uppercase">No Pátio</p><h3 id="stat-total" class="text-xl sm:text-2xl font-black">0</h3></div>
+            <i class="fa-solid fa-car text-slate-300 text-2xl sm:text-3xl"></i>
         </div>
-        <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-between border-l-4 border-purple-500">
-            <div><p class="text-xs text-purple-600 font-bold uppercase">Em Execução</p><h3 id="stat-execucao" class="text-2xl font-black text-purple-600">0</h3></div>
-            <i class="fa-solid fa-screwdriver-wrench text-purple-200 text-3xl"></i>
+        <div class="bg-white dark:bg-slate-900 p-3 sm:p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-between border-l-4 border-purple-500 hover:shadow-md transition">
+            <div><p class="text-[10px] sm:text-xs text-purple-600 font-bold uppercase">Em Execução</p><h3 id="stat-execucao" class="text-xl sm:text-2xl font-black text-purple-600">0</h3></div>
+            <i class="fa-solid fa-screwdriver-wrench text-purple-200 text-2xl sm:text-3xl"></i>
         </div>
-        <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-between border-l-4 border-orange-500">
-            <div><p class="text-xs text-orange-600 font-bold uppercase">Aguard. Peças</p><h3 id="stat-pecas" class="text-2xl font-black text-orange-600">0</h3></div>
-            <i class="fa-solid fa-box text-orange-200 text-3xl"></i>
+        <div class="bg-white dark:bg-slate-900 p-3 sm:p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-between border-l-4 border-orange-500 hover:shadow-md transition">
+            <div><p class="text-[10px] sm:text-xs text-orange-600 font-bold uppercase">Aguard. Peças</p><h3 id="stat-pecas" class="text-xl sm:text-2xl font-black text-orange-600">0</h3></div>
+            <i class="fa-solid fa-box text-orange-200 text-2xl sm:text-3xl"></i>
         </div>
-        <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-between border-l-4 border-emerald-500">
-            <div><p class="text-xs text-emerald-600 font-bold uppercase">Prontos</p><h3 id="stat-prontos" class="text-2xl font-black text-emerald-600">0</h3></div>
-            <i class="fa-solid fa-circle-check text-emerald-200 text-3xl"></i>
+        <div class="bg-white dark:bg-slate-900 p-3 sm:p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-between border-l-4 border-emerald-500 hover:shadow-md transition">
+            <div><p class="text-[10px] sm:text-xs text-emerald-600 font-bold uppercase">Prontos</p><h3 id="stat-prontos" class="text-xl sm:text-2xl font-black text-emerald-600">0</h3></div>
+            <i class="fa-solid fa-circle-check text-emerald-200 text-2xl sm:text-3xl"></i>
         </div>
-        <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-between border-l-4 border-slate-700">
-            <div><p class="text-xs text-slate-500 font-bold uppercase">Entregues</p><h3 id="stat-entregues" class="text-2xl font-black text-slate-700">0</h3></div>
-            <i class="fa-solid fa-key text-slate-300 text-3xl"></i>
+        <div class="bg-white dark:bg-slate-900 p-3 sm:p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-between border-l-4 border-slate-700 hover:shadow-md transition">
+            <div><p class="text-[10px] sm:text-xs text-slate-500 font-bold uppercase">Entregues</p><h3 id="stat-entregues" class="text-xl sm:text-2xl font-black text-slate-700">0</h3></div>
+            <i class="fa-solid fa-key text-slate-300 text-2xl sm:text-3xl"></i>
         </div>
     </section>
 
     <!-- FILTRO AVANÇADO -->
-    <section class="max-w-7xl mx-auto px-4 mb-4">
-        <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col lg:flex-row gap-3 items-center">
+    <section class="max-w-7xl mx-auto px-3 sm:px-4 mb-4">
+        <div class="bg-white dark:bg-slate-900 p-3 sm:p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col lg:flex-row gap-3 items-center shadow-sm">
             <div class="relative w-full lg:flex-1">
                 <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                <input type="text" id="input-busca" oninput="renderizarCards()" placeholder="Pesquise por Cliente, Placa, Modelo, Telefone, Defeito..." 
-                    class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg pl-10 pr-4 py-2 text-sm focus:outline-none">
+                <input type="text" id="input-busca" oninput="renderizarCards()" placeholder="Pesquise por Cliente, Placa, Modelo, Telefone, Defeito..."
+                class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition">
             </div>
             <div class="w-full lg:w-auto flex flex-col sm:flex-row gap-2">
                 <div class="flex items-center gap-1.5">
-                    <label class="text-xs font-bold text-slate-400 uppercase whitespace-nowrap"><i class="fa-solid fa-filter"></i> Status:</label>
-                    <select id="filtro-status" onchange="renderizarCards()" class="bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-2 py-1.5 text-sm">
+                    <label class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase whitespace-nowrap"><i class="fa-solid fa-filter"></i> Status:</label>
+                    <select id="filtro-status" onchange="renderizarCards()" class="bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-2 py-2 text-sm focus:ring-2 focus:ring-blue-500/50 transition">
                         <option value="Todos Ativos">Todos Ativos (Pátio)</option>
                         <option value="Todos">Todos (Com Histórico)</option>
                         <option value="Aguardando Diagnóstico">🟡 Diagnóstico</option>
@@ -132,8 +419,8 @@
                     </select>
                 </div>
                 <div class="flex items-center gap-1.5">
-                    <label class="text-xs font-bold text-slate-400 uppercase whitespace-nowrap"><i class="fa-solid fa-user-gear"></i> Mecânico:</label>
-                    <select id="filtro-mecanico" onchange="renderizarCards()" class="bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-2 py-1.5 text-sm w-full sm:w-44">
+                    <label class="text-[10px] sm:text-xs font-bold text-slate-400 uppercase whitespace-nowrap"><i class="fa-solid fa-user-gear"></i> Mecânico:</label>
+                    <select id="filtro-mecanico" onchange="renderizarCards()" class="bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-2 py-2 text-sm w-full sm:w-44 focus:ring-2 focus:ring-blue-500/50 transition">
                         <option value="Todos">Todos Profissionais</option>
                     </select>
                 </div>
@@ -142,7 +429,7 @@
     </section>
 
     <!-- GRID DE CARDS -->
-    <main class="max-w-7xl mx-auto px-4 pb-24">
+    <main class="max-w-7xl mx-auto px-3 sm:px-4 pb-24">
         <div id="grid-veiculos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
         <div id="container-vazio" class="hidden text-center py-16 bg-white dark:bg-slate-900 border border-dashed border-slate-300 dark:border-slate-800 rounded-2xl text-slate-400">
             <i class="fa-solid fa-car-rear text-5xl mb-3 block"></i>
@@ -151,21 +438,21 @@
     </main>
 
     <!-- BOTÃO FLUTUANTE ADICIONAR -->
-    <button onclick="abrirModal()" class="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center text-2xl cursor-pointer z-40">
+    <button onclick="abrirModal()" class="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center text-2xl cursor-pointer z-40 transition duration-150 transform hover:scale-105 active:scale-95">
         <i class="fa-solid fa-plus"></i>
     </button>
 
     <!-- MODAL CADASTRO / EDIÇÃO VEÍCULO -->
     <div id="modal-cadastro" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 overflow-y-auto">
         <div class="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-2xl shadow-xl max-h-[95vh] overflow-y-auto border dark:border-slate-800">
-            <header class="p-4 border-b dark:border-slate-800 flex justify-between items-center bg-slate-50 dark:bg-slate-800/50">
-                <h2 id="modal-titulo" class="font-bold text-slate-800 dark:text-white">Nova Entrada</h2>
-                <button onclick="fecharModal()" class="text-slate-400 text-lg cursor-pointer">&times;</button>
+            <header class="p-4 border-b dark:border-slate-800 flex justify-between items-center bg-slate-50 dark:bg-slate-800/50 sticky top-0 z-10">
+                <h2 id="modal-titulo" class="font-bold text-slate-800 dark:text-white text-lg">Nova Entrada</h2>
+                <button onclick="fecharModal()" class="text-slate-400 text-2xl cursor-pointer hover:text-red-500 transition p-1 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700">×</button>
             </header>
             <form id="form-veiculo" class="p-5 space-y-4">
                 <input type="hidden" id="veiculo-id">
-                
-                <div class="flex flex-col items-center py-2 bg-slate-100 dark:bg-slate-800/50 rounded-xl">
+
+                <div class="flex flex-col items-center py-3 bg-slate-100 dark:bg-slate-800/50 rounded-xl">
                     <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Placa do Veículo</label>
                     <div class="placa-container-form" id="placaMoldura">
                         <div class="placa-header-form" id="placaTopo">
@@ -182,61 +469,71 @@
 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-slate-50 dark:bg-slate-800/30 p-3 rounded-xl">
                     <div class="col-span-1 sm:col-span-3"><h3 class="text-xs font-bold text-blue-600 uppercase">Proprietário</h3></div>
-                    <div><label class="block text-xs font-medium mb-1">Nome do Cliente *</label><input type="text" id="input-cliente" required class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-1.5 text-sm"></div>
-                    <div><label class="block text-xs font-medium mb-1">Telefone *</label><input type="text" id="input-telefone" placeholder="(00) 00000-0000" required class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-1.5 text-sm"></div>
-                    <div><label class="block text-xs font-medium mb-1">CPF (Opcional)</label><input type="text" id="input-cpf" placeholder="000.000.000-00" class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-1.5 text-sm"></div>
+                    <div><label class="block text-xs font-medium mb-1">Nome do Cliente *</label><input type="text" id="input-cliente" required class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500/50 transition"></div>
+                    <div><label class="block text-xs font-medium mb-1">Telefone *</label><input type="text" id="input-telefone" placeholder="(00) 00000-0000" required class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500/50 transition"></div>
+                    <div><label class="block text-xs font-medium mb-1">CPF (Opcional)</label><input type="text" id="input-cpf" placeholder="000.000.000-00" class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500/50 transition"></div>
                 </div>
 
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-50 dark:bg-slate-800/30 p-3 rounded-xl">
                     <div class="col-span-2 sm:col-span-4"><h3 class="text-xs font-bold text-blue-600 uppercase">Ficha e Alocação</h3></div>
-                    <div><label class="block text-xs font-medium mb-1">Montadora *</label><input type="text" id="input-montadora" placeholder="Fiat" required class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-1.5 text-sm"></div>
-                    <div><label class="block text-xs font-medium mb-1">Modelo *</label><input type="text" id="input-modelo" placeholder="Uno" required class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-1.5 text-sm"></div>
-                    <div><label class="block text-xs font-medium mb-1">Ano</label><input type="number" id="input-ano" class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-1.5 text-sm"></div>
-                    <div><label class="block text-xs font-medium mb-1">Cor</label><input type="text" id="input-cor" class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-1.5 text-sm"></div>
-                    <div class="col-span-2"><label class="block text-xs font-medium mb-1">Mecânico Escalado *</label><select id="input-mecanico" required class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-1.5 text-sm"></select></div>
-                    <div><label class="block text-xs font-medium mb-1">KM Atual</label><input type="number" id="input-km" class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-1.5 text-sm"></div>
-                    <div><label class="block text-xs font-medium mb-1">Prioridade</label><select id="input-prioridade" class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-1.5 text-sm"><option value="Baixa">Baixa</option><option value="Média" selected>Média</option><option value="Alta">Alta</option><option value="Urgente">🚨 Urgente</option></select></div>
+                    <div><label class="block text-xs font-medium mb-1">Montadora *</label><input type="text" id="input-montadora" placeholder="Fiat" required class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500/50 transition"></div>
+                    <div><label class="block text-xs font-medium mb-1">Modelo *</label><input type="text" id="input-modelo" placeholder="Uno" required class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500/50 transition"></div>
+                    <div><label class="block text-xs font-medium mb-1">Ano</label><input type="number" id="input-ano" class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500/50 transition"></div>
+                    <div><label class="block text-xs font-medium mb-1">Cor</label><input type="text" id="input-cor" class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500/50 transition"></div>
+                    <div class="col-span-2"><label class="block text-xs font-medium mb-1">Mecânico Escalado *</label><select id="input-mecanico" required class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500/50 transition"></select></div>
+                    <div><label class="block text-xs font-medium mb-1">KM Atual</label><input type="number" id="input-km" class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500/50 transition"></div>
+                    <div><label class="block text-xs font-medium mb-1">Prioridade</label><select id="input-prioridade" class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500/50 transition"><option value="Baixa">Baixa</option><option value="Média" selected>Média</option><option value="Alta">Alta</option><option value="Urgente">🚨 Urgente</option></select></div>
                 </div>
 
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    <div><label class="block text-xs font-medium mb-1">Data Entrada</label><input type="date" id="input-entrada" required class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-2 py-1.5 text-sm"></div>
-                    <div><label class="block text-xs font-medium mb-1">Previsão</label><input type="date" id="input-previsao" class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-2 py-1.5 text-sm"></div>
-                    <div><label class="block text-xs font-medium mb-1">Orçamento Total (R$)</label><input type="number" step="0.01" id="input-valor-orcamento" class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-1.5 text-sm"></div>
-                    <div><label class="block text-xs font-medium mb-1">Valor Pago (R$)</label><input type="number" step="0.01" id="input-valor-pago" class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-1.5 text-sm"></div>
-                    <div class="col-span-2 sm:col-span-4"><label class="block text-xs font-medium mb-1">Status de Oficina</label><select id="input-status" class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-1.5 text-sm"><option value="Aguardando Diagnóstico">Aguardando Diagnóstico</option><option value="Em Diagnóstico">Em Diagnóstico</option><option value="Aguardando Peças">Aguardando Peças</option><option value="Em Execução">Em Execução</option><option value="Pronto para Entrega">Pronto para Entrega</option><option value="Entregue">Entregue</option><option value="Cancelado">Cancelado</option></select></div>
+                    <div><label class="block text-xs font-medium mb-1">Data Entrada</label><input type="date" id="input-entrada" required class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-2 py-2 text-sm focus:ring-2 focus:ring-blue-500/50 transition"></div>
+                    <div><label class="block text-xs font-medium mb-1">Previsão</label><input type="date" id="input-previsao" class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-2 py-2 text-sm focus:ring-2 focus:ring-blue-500/50 transition"></div>
+                    <div><label class="block text-xs font-medium mb-1">Orçamento Total (R$)</label><input type="text" id="input-valor-orcamento" placeholder="0,00" class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-2 text-sm font-semibold text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-500/50 transition"></div>
+                    <div><label class="block text-xs font-medium mb-1">Valor Pago (R$)</label><input type="text" id="input-valor-pago" placeholder="0,00" class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-2 text-sm font-semibold text-slate-800 dark:text-white focus:ring-2 focus:ring-blue-500/50 transition"></div>
+                    <div class="col-span-2 sm:col-span-4"><label class="block text-xs font-medium mb-1">Status de Oficina</label><select id="input-status" class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500/50 transition"><option value="Aguardando Diagnóstico">Aguardando Diagnóstico</option><option value="Em Diagnóstico">Em Diagnóstico</option><option value="Aguardando Peças">Aguardando Peças</option><option value="Em Execução">Em Execução</option><option value="Pronto para Entrega">Pronto para Entrega</option><option value="Entregue">Entregue</option><option value="Cancelado">Cancelado</option></select></div>
                 </div>
 
-                <div><label class="block text-xs font-medium mb-1">Serviço / Sintoma Informado</label><input type="text" id="input-servico" required class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-1.5 text-sm"></div>
-                <div><label class="block text-xs font-medium mb-1">Observações / Histórico de Reparos</label><textarea id="input-obs" rows="2" class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-1.5 text-sm"></textarea></div>
+                <div><label class="block text-xs font-medium mb-1">Serviço / Sintoma Informado</label><input type="text" id="input-servico" required class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500/50 transition"></div>
+                <div><label class="block text-xs font-medium mb-1">Observações / Histórico de Reparos</label><textarea id="input-obs" rows="2" class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500/50 transition"></textarea></div>
 
-                <footer class="flex justify-end gap-2 border-t dark:border-slate-800 pt-3">
-                    <button type="button" onclick="fecharModal()" class="px-4 py-2 bg-slate-200 dark:bg-slate-800 rounded-lg text-sm font-semibold">Cancelar</button>
-                    <button type="submit" class="px-5 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold shadow">Gravar OS</button>
+                <footer class="flex justify-end gap-2 border-t dark:border-slate-800 pt-4">
+                    <button type="button" onclick="fecharModal()" class="px-5 py-2.5 bg-slate-200 dark:bg-slate-800 rounded-lg text-sm font-semibold hover:bg-slate-300 dark:hover:bg-slate-700 transition cursor-pointer">Cancelar</button>
+                    <button type="submit" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold shadow transition cursor-pointer">Gravar OS</button>
                 </footer>
             </form>
         </div>
     </div>
 
-    <!-- MODAL GESTÃO DE MECÂNICOS (PRÉ-CADASTRO) -->
+    <!-- MODAL GESTÃO DE MECÂNICOS - VERTICAL -->
     <div id="modal-mecanicos" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
         <div class="bg-white dark:bg-slate-900 w-full max-w-md rounded-2xl shadow-xl border dark:border-slate-800 max-h-[90vh] flex flex-col">
             <header class="p-4 border-b dark:border-slate-800 flex justify-between items-center bg-slate-50 dark:bg-slate-800/50">
                 <h2 class="font-bold text-sm uppercase tracking-wider"><i class="fa-solid fa-user-wrench text-blue-500"></i> Cadastro da Equipe</h2>
-                <button onclick="fecharModalMecanicos()" class="text-slate-400 text-lg cursor-pointer">&times;</button>
+                <button onclick="fecharModalMecanicos()" class="text-slate-400 text-2xl cursor-pointer hover:text-red-500 transition p-1 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700">×</button>
             </header>
             <div class="p-4 flex-1 overflow-y-auto space-y-4">
-                <form id="form-mecanico" class="flex gap-2 items-end bg-slate-50 dark:bg-slate-800/40 p-3 rounded-xl border border-slate-200 dark:border-slate-800">
-                    <div class="flex-1">
-                        <label class="block text-[10px] font-bold uppercase mb-1">Nome *</label>
-                        <input type="text" id="mec-nome" required placeholder="Ex: Roberto Cruz" class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-2 py-1 text-sm">
+                <!-- Formulário Vertical -->
+                <form id="form-mecanico" class="form-mecanicos-vertical bg-slate-50 dark:bg-slate-800/40 p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+                    <div class="campo-group">
+                        <label for="mec-nome"><i class="fa-solid fa-user"></i> Nome do Profissional *</label>
+                        <input type="text" id="mec-nome" required placeholder="Ex: Roberto Cruz" class="w-full">
                     </div>
-                    <div>
-                        <label class="block text-[10px] font-bold uppercase mb-1">Whatsapp *</label>
-                        <input type="text" id="mec-whats" placeholder="(83) 99999-0000" required class="w-full bg-white dark:bg-slate-800 border dark:border-slate-700 rounded px-2 py-1 text-sm w-36">
+                    <div class="campo-group">
+                        <label for="mec-whats"><i class="fa-brands fa-whatsapp"></i> WhatsApp *</label>
+                        <input type="text" id="mec-whats" placeholder="(83) 99999-0000" required class="w-full">
                     </div>
-                    <button type="submit" class="bg-blue-600 text-white py-1 px-3 rounded text-sm font-semibold cursor-pointer h-8"><i class="fa-solid fa-plus"></i></button>
+                    <button type="submit" class="btn-com-texto bg-blue-600 hover:bg-blue-700 text-white shadow-sm hover:shadow">
+                        <i class="fa-solid fa-user-plus"></i> Adicionar Profissional
+                    </button>
                 </form>
-                <div class="space-y-2"><h4 class="text-xs font-bold text-slate-400 uppercase tracking-tight">Profissionais Cadastrados</h4><ul id="lista-mecanicos" class="divide-y divide-slate-100 dark:divide-slate-800"></ul></div>
+
+                <!-- Lista de Mecânicos com Botões Verticais -->
+                <div class="space-y-3">
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-tight flex items-center gap-2">
+                        <i class="fa-solid fa-users"></i> Profissionais Cadastrados
+                    </h4>
+                    <ul id="lista-mecanicos" class="divide-y divide-slate-100 dark:divide-slate-800"></ul>
+                </div>
             </div>
         </div>
     </div>
@@ -246,10 +543,12 @@
         <div class="bg-white dark:bg-slate-900 w-full max-w-3xl rounded-2xl shadow-xl border dark:border-slate-800 max-h-[90vh] flex flex-col">
             <header class="p-4 border-b dark:border-slate-800 flex flex-col sm:flex-row justify-between sm:items-center gap-2 bg-slate-50 dark:bg-slate-800/50">
                 <h2 class="font-bold text-sm uppercase tracking-wider text-slate-700 dark:text-slate-300"><i class="fa-solid fa-file-invoice-dollar text-emerald-500"></i> Painel de Fechamentos e Relatórios</h2>
-                <div class="flex items-center gap-2">
-                    <select id="relatorio-filtro-mec" onchange="gerarPainelRelatorio()" class="bg-white dark:bg-slate-800 border dark:border-slate-700 text-xs rounded p-1"></select>
-                    <button onclick="dispararImpressao()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-2.5 py-1 rounded font-bold cursor-pointer"><i class="fa-solid fa-print"></i> PDF</button>
-                    <button onclick="fecharModalRelatorios()" class="text-slate-400 text-xl pl-2 cursor-pointer">&times;</button>
+                <div class="flex items-center gap-2 flex-wrap">
+                    <select id="relatorio-filtro-mec" onchange="gerarPainelRelatorio()" class="bg-white dark:bg-slate-800 border dark:border-slate-700 text-xs rounded p-2 focus:ring-2 focus:ring-blue-500/50 transition"></select>
+                    <button onclick="dispararImpressao()" class="btn-com-texto bg-blue-600 hover:bg-blue-700 text-white shadow-sm hover:shadow" style="width: auto; padding: 0.5rem 1rem;">
+                        <i class="fa-solid fa-print"></i> Gerar PDF
+                    </button>
+                    <button onclick="fecharModalRelatorios()" class="text-slate-400 text-xl pl-2 cursor-pointer hover:text-red-500 transition p-1 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700">×</button>
                 </div>
             </header>
             <div id="preview-relatorio-modal" class="p-6 overflow-y-auto flex-1 space-y-4 bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100">
@@ -265,8 +564,8 @@
                 <!-- Conteúdo Visual na Tela -->
             </div>
             <footer class="p-4 bg-slate-50 dark:bg-slate-800/50 border-t dark:border-slate-800 flex justify-end gap-2">
-                <button onclick="document.getElementById('modal-visualizacao').classList.add('hidden')" class="px-4 py-2 bg-slate-200 dark:bg-slate-800 rounded-lg text-sm font-semibold">Fechar</button>
-                <button onclick="dispararImpressao()" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold"><i class="fa-solid fa-print"></i> Imprimir OS</button>
+                <button onclick="document.getElementById('modal-visualizacao').classList.add('hidden')" class="px-5 py-2.5 bg-slate-200 dark:bg-slate-800 rounded-lg text-sm font-semibold hover:bg-slate-300 transition cursor-pointer">Fechar</button>
+                <button onclick="dispararImpressao()" class="px-5 py-2.5 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-700 transition flex items-center gap-1.5 cursor-pointer shadow-sm hover:shadow"><i class="fa-solid fa-print"></i> Imprimir OS</button>
             </footer>
         </div>
     </div>
@@ -283,7 +582,8 @@
             { id: 1, nome: "Oficina Geral", telefone: "" } // Padrão
         ];
 
-        if (localStorage.getItem('tema_escuro') === 'true') { document.documentElement.classList.add('dark'); atualizarIconeTema(true); }
+        if (localStorage.getItem('tema_escuro') === 'true') { document.documentElement.classList.add('dark');
+            atualizarIconeTema(true); }
 
         const formVeiculo = document.getElementById('form-veiculo');
         const formMecanico = document.getElementById('form-mecanico');
@@ -291,6 +591,37 @@
         const placaTopo = document.getElementById('placaTopo');
         const txtMercosul = document.getElementById('txtMercosul');
         const tagBr = document.getElementById('tagBr');
+
+        // MÁSCARA FINANCEIRA / PONTUAÇÃO AUTOMÁTICA EM REAIS (R$)
+        function configurarMascaraDinheiro(idInput) {
+            const input = document.getElementById(idInput);
+            input.addEventListener('input', (e) => {
+                let v = e.target.value.replace(/\D/g, "");
+                if (v === "") {
+                    e.target.value = "";
+                    return;
+                }
+                v = (v / 100).toFixed(2) + "";
+                v = v.replace(".", ",");
+                v = v.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+                e.target.value = v;
+            });
+        }
+        configurarMascaraDinheiro('input-valor-orcamento');
+        configurarMascaraDinheiro('input-valor-pago');
+
+        // Converte o texto da máscara para o formato numérico correto que o JS compreende antes de salvar
+        function parseValorMonetario(valorString) {
+            if (!valorString) return 0;
+            const limpo = valorString.replace(/\./g, "").replace(",", ".");
+            return parseFloat(limpo) || 0;
+        }
+
+        // Converte um número JS para a string formatada em R$ na tela de edição
+        function formatarNumeroParaInput(numero) {
+            if (!numero || isNaN(numero)) return "";
+            return numero.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
 
         // Função utilitária para formatar datas (AAAA-MM-DD -> DD/MM/AAAA)
         function formatarDataBR(dataString) {
@@ -309,23 +640,27 @@
 
             for (let i = 0; i < value.length; i++) {
                 const char = value[i];
-                if (i < 3) { if (/[A-Z]/.test(char)) formattedValue += char; } 
-                else if (i === 3) { if (/[0-9]/.test(char)) formattedValue += char; } 
-                else if (i === 4) {
-                    if (isMercosul) { if (/[A-Z]/.test(char)) formattedValue += char; } 
-                    else { if (/[0-9]/.test(char)) formattedValue += char; }
-                } 
-                else if (i >= 5 && i < 7) { if (/[0-9]/.test(char)) formattedValue += char; }
+                if (i < 3) { if (/[A-Z]/.test(char)) formattedValue += char; } else if (i === 3) { if (/[0-9]/
+                        .test(char)) formattedValue += char; } else if (i === 4) {
+                    if (isMercosul) { if (/[A-Z]/.test(char)) formattedValue += char; } else { if (/[0-9]/
+                            .test(char)) formattedValue += char; }
+                } else if (i >= 5 && i < 7) { if (/[0-9]/.test(char)) formattedValue += char; }
             }
-            if (formattedValue.length > 3) { formattedValue = formattedValue.slice(0, 3) + '-' + formattedValue.slice(3); }
+            if (formattedValue.length > 3) { formattedValue = formattedValue.slice(0, 3) + '-' + formattedValue.slice(
+                3); }
             e.target.value = formattedValue;
 
             // Layout Dinâmico
             const limpo = formattedValue.replace('-', '');
             if (limpo.length > 4) {
-                if (isMercosul) { placaTopo.style.backgroundColor = "#003399"; txtMercosul.style.display = "inline"; tagBr.style.display = "inline"; } 
-                else { placaTopo.style.backgroundColor = "#334155"; txtMercosul.style.display = "none"; tagBr.style.display = "none"; }
-            } else { placaTopo.style.backgroundColor = "#003399"; txtMercosul.style.display = "inline"; tagBr.style.display = "inline"; }
+                if (isMercosul) { placaTopo.style.backgroundColor = "#003399";
+                    txtMercosul.style.display = "inline";
+                    tagBr.style.display = "inline"; } else { placaTopo.style.backgroundColor = "#334155";
+                    txtMercosul.style.display = "none";
+                    tagBr.style.display = "none"; }
+            } else { placaTopo.style.backgroundColor = "#003399";
+                txtMercosul.style.display = "inline";
+                tagBr.style.display = "inline"; }
         });
 
         // Eventos e Mascaras de Contatos Celulares
@@ -360,17 +695,125 @@
             lista.innerHTML = '';
             mecanicos.forEach(m => {
                 const li = document.createElement('li');
-                li.className = "flex justify-between items-center py-2 text-xs";
+                li.className = "py-3 border-b dark:border-slate-800 last:border-b-0";
                 li.innerHTML = `
-                    <div><span class="font-bold text-slate-700 dark:text-slate-200">${m.nome}</span> <span class="text-slate-400 ml-1">${m.telefone}</span></div>
-                    ${m.id !== 1 ? `<button onclick="removerMecanico(${m.id})" class="text-red-400 hover:text-red-600 text-[11px]"><i class="fa-solid fa-trash-can"></i></button>` : '<span class="text-[9px] text-slate-400 font-bold uppercase">PADRÃO</span>'}
-                `;
+                        <div class="flex flex-col gap-2">
+                            <div class="flex justify-between items-start">
+                                <div class="flex-1 min-w-0">
+                                    <span class="font-bold text-slate-700 dark:text-slate-200 block">${m.nome}</span> 
+                                    <span class="text-sm text-slate-400 block">${m.telefone || 'Sem contato'}</span>
+                                </div>
+                                ${m.id === 1 ? '<span class="btn-padrao-mecanico">Padrão</span>' : ''}
+                            </div>
+                            
+                            <div class="botoes-acao-mecanico">
+                                ${m.telefone ? `
+                                    <button onclick="dispararWppListaMecanico(${m.id})" class="btn-acao btn-wpp-mecanico">
+                                        <i class="fa-brands fa-whatsapp"></i> Enviar Ficha por WhatsApp
+                                    </button>
+                                ` : ''}
+                                <button onclick="gerarPDFMecanico(${m.id})" class="btn-acao btn-pdf-mecanico">
+                                    <i class="fa-solid fa-file-pdf"></i> Gerar PDF das Tarefas
+                                </button>
+                                ${m.id !== 1 ? `
+                                    <button onclick="removerMecanico(${m.id})" class="btn-acao btn-excluir-mecanico">
+                                        <i class="fa-solid fa-trash-can"></i> Excluir Profissional
+                                    </button>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `;
                 lista.appendChild(li);
             });
         }
 
+        // WhatsApp do Mecânico (MALA DIRETA COM TODAS AS ORDENS ATIVAS ATRIBUÍDAS)
+        function dispararWppListaMecanico(mecanicoId) {
+            const mec = mecanicos.find(m => m.id === mecanicoId);
+            if (!mec) return;
+
+            // Filtra os veículos ativos (tudo que não foi finalizado/entregue) destinados a este mecânico
+            const tarefas = veiculos.filter(v => v.mecanico === mec.nome && v.status !== 'Entregue' && v.status !==
+            'Cancelado');
+
+            if (tarefas.length === 0) {
+                alert(`Não existem veículos ativos ou em andamento alocados para ${mec.nome} no momento.`);
+                return;
+            }
+
+            let msg = `🔧 *FICHA DIÁRIA DE TRABALHO - ${mec.nome.toUpperCase()}*\n`;
+            msg += `📅 _Atualizado em: ${new Date().toLocaleDateString('pt-BR')}_\n\n`;
+            msg += `Olá *${mec.nome}*, segue a lista atualizada dos veículos sob sua responsabilidade na oficina:\n\n`;
+
+            tarefas.forEach((v, index) => {
+                msg += `📌 *[${index + 1}] ${v.modelo.toUpperCase()}* (${v.placa})\n`;
+                msg += `▪️ *Status:* _${v.status}_\n`;
+                msg += `▪️ *Serviço:* ${v.servico}\n`;
+                if (v.obs && v.obs.trim() !== "") {
+                    msg += `▪️ *Observações:* ${v.obs.trim()}\n`;
+                }
+                msg += `▪️ *Previsão:* ${formatarDataBR(v.previsao)}\n\n`;
+            });
+
+            msg += `_Mantenha o status atualizado no painel da oficina. Bom trabalho!_`;
+
+            const fone = mec.telefone.replace(/\D/g, '');
+            window.open(`https://api.whatsapp.com/send?phone=55${fone}&text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        // Geração do PDF/Ficha de Impressão focada em um Mecânico específico
+        function gerarPDFMecanico(mecanicoId) {
+            const mec = mecanicos.find(m => m.id === mecanicoId);
+            if (!mec) return;
+
+            const tarefas = veiculos.filter(v => v.mecanico === mec.nome);
+
+            const previewImpressao = document.getElementById('area-impressao-conteudo');
+
+            const templateHTML = `
+                    <div class="border-b-2 pb-4 flex justify-between items-center">
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-900 uppercase">Ficha Técnica de Trabalho</h2>
+                            <p class="text-xs text-slate-500 uppercase">Profissional: <strong>${mec.nome}</strong> | Contato: ${mec.telefone || 'Sem telefone'}</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-[10px] text-slate-400 uppercase">Emissão do Sistema</p>
+                            <p class="text-xs font-mono font-bold">${new Date().toLocaleDateString('pt-BR')}</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 space-y-6">
+                        <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider">Histórico e Lista de Tarefas Alocadas (${tarefas.length})</h3>
+                        
+                        ${tarefas.length === 0 ? `
+                            <p class="text-xs text-slate-400 italic">Nenhum veículo alocado para este mecânico.</p>
+                        ` : tarefas.map((v, index) => `
+                            <div class="border rounded-lg p-3 bg-slate-50 space-y-2 text-xs">
+                                <div class="flex justify-between items-center bg-slate-200 p-2 rounded">
+                                    <span class="font-bold text-slate-800">#${index + 1} - ${v.modelo} (${v.cor || 'Cor N/I'})</span>
+                                    <span class="font-mono bg-white px-2 py-0.5 rounded border border-slate-400 font-bold text-slate-950">${v.placa}</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2 mt-2">
+                                    <p><strong>Cliente:</strong> ${v.cliente} (${v.telefone})</p>
+                                    <p><strong>Entrada:</strong> ${formatarDataBR(v.entrada)} | <strong>Previsão:</strong> ${formatarDataBR(v.previsao)}</p>
+                                    <p><strong>Status Oficina:</strong> <span class="font-bold text-blue-700">${v.status}</span></p>
+                                    <p><strong>Prioridade:</strong> <span class="font-bold">${v.prioridade}</span></p>
+                                </div>
+                                <div class="pt-1 border-t">
+                                    <p><strong>Serviço / Sintoma:</strong> ${v.servico}</p>
+                                    ${v.obs ? `<p class="mt-1 text-slate-600 bg-white p-1.5 rounded border"><strong>Observação Técnica:</strong> ${v.obs}</p>` : ''}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+
+            previewImpressao.innerHTML = templateHTML;
+            window.print();
+        }
+
         function removerMecanico(id) {
-            if(confirm("Deseja desvincular este profissional? Os veículos dele serão mantidos.")) {
+            if (confirm("Deseja desvincular este profissional? Os veículos dele serão mantidos.")) {
                 mecanicos = mecanicos.filter(m => m.id !== id);
                 localStorage.setItem('mini_erp_mecanicos', JSON.stringify(mecanicos));
                 renderizarMecanicos();
@@ -385,7 +828,7 @@
             const rMec = document.getElementById('relatorio-filtro-mec');
 
             const valFiltroAnterior = fMec.value;
-            
+
             fMec.innerHTML = '<option value="Todos">Todos Profissionais</option>';
             iMec.innerHTML = '';
             rMec.innerHTML = '<option value="Todos">Empresa (Geral)</option>';
@@ -396,7 +839,7 @@
                 rMec.innerHTML += `<option value="${m.nome}">Por Mecânico: ${m.nome}</option>`;
             });
 
-            if([...fMec.options].some(o => o.value === valFiltroAnterior)) fMec.value = valFiltroAnterior;
+            if ([...fMec.options].some(o => o.value === valFiltroAnterior)) fMec.value = valFiltroAnterior;
         }
 
         // Envio da OS do Veículo
@@ -419,14 +862,14 @@
                 previsao: document.getElementById('input-previsao').value,
                 status: document.getElementById('input-status').value,
                 prioridade: document.getElementById('input-prioridade').value,
-                valorOrcamento: parseFloat(document.getElementById('input-valor-orcamento').value) || 0,
-                valorPago: parseFloat(document.getElementById('input-valor-pago').value) || 0,
+                valorOrcamento: parseValorMonetario(document.getElementById('input-valor-orcamento').value),
+                valorPago: parseValorMonetario(document.getElementById('input-valor-pago').value),
                 servico: document.getElementById('input-servico').value,
                 obs: document.getElementById('input-obs').value
             };
 
-            if (id) { veiculos[veiculos.findIndex(v => v.id === parseInt(id))] = dados; } 
-            else { veiculos.push(dados); }
+            if (id) { veiculos[veiculos.findIndex(v => v.id === parseInt(id))] = dados; } else { veiculos.push(
+                dados); }
 
             localStorage.setItem('mini_erp_oficina_dados', JSON.stringify(veiculos));
             fecharModal();
@@ -437,13 +880,13 @@
             const limpa = placaString.replace('-', '');
             const isMercosul = limpa.length > 4 && /[A-Z]/.test(limpa[4]);
             return `
-                <div class="mini-placa">
-                    <div class="mini-placa-header ${isMercosul ? 'bg-[#003399]' : 'bg-slate-700'}">
-                        ${isMercosul ? '<span>MERCOSUL</span><span>BRASIL</span>' : '<span class="w-full text-center">BRASIL</span>'}
+                    <div class="mini-placa">
+                        <div class="mini-placa-header ${isMercosul ? 'bg-[#003399]' : 'bg-slate-700'}">
+                            ${isMercosul ? '<span>MERCOSUL</span><span>BRASIL</span>' : '<span class="w-full text-center">BRASIL</span>'}
+                        </div>
+                        <div class="mini-placa-body">${placaString}</div>
                     </div>
-                    <div class="mini-placa-body">${placaString}</div>
-                </div>
-            `;
+                `;
         }
 
         function renderizarCards() {
@@ -456,46 +899,51 @@
             grid.innerHTML = '';
 
             const filtrados = veiculos.filter(v => {
-                const matchBusca = v.cliente.toLowerCase().includes(tBusca) || v.placa.toLowerCase().includes(tBusca) || v.modelo.toLowerCase().includes(tBusca) || v.servico.toLowerCase().includes(tBusca);
-                const matchStatus = (fStatus === 'Todos') || (fStatus === 'Todos Ativos' && v.status !== 'Entregue' && v.status !== 'Cancelado') || (v.status === fStatus);
+                const matchBusca = v.cliente.toLowerCase().includes(tBusca) || v.placa.toLowerCase().includes(
+                    tBusca) || v.modelo.toLowerCase().includes(tBusca) || v.servico.toLowerCase().includes(
+                    tBusca);
+                const matchStatus = (fStatus === 'Todos') || (fStatus === 'Todos Ativos' && v.status !== 'Entregue' &&
+                    v.status !== 'Cancelado') || (v.status === fStatus);
                 const matchMec = (fMec === 'Todos') || (v.mecanico === fMec);
                 return matchBusca && matchStatus && matchMec;
             });
 
-            if(filtrados.length === 0) { containerVazio.classList.remove('hidden'); atualizarEstatisticaRapida(); return; }
+            if (filtrados.length === 0) { containerVazio.classList.remove('hidden');
+                atualizarEstatisticaRapida(); return; }
             containerVazio.classList.add('hidden');
-            filtrados.sort((a,b) => b.id - a.id);
+            filtrados.sort((a, b) => b.id - a.id);
 
             filtrados.forEach(v => {
-                const pendente = v.valorOrcamento - v.valorPago;
+                const pendente = (v.valorOrcamento || 0) - (v.valorPago || 0);
                 const card = document.createElement('div');
-                card.className = "bg-white dark:bg-slate-900 rounded-2xl shadow-xs border border-slate-200 dark:border-slate-800 p-4 space-y-3 flex flex-col justify-between";
-                
+                card.className =
+                    "bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-4 space-y-3 flex flex-col justify-between hover:shadow-md transition duration-200";
+
                 card.innerHTML = `
-                    <div class="space-y-3">
-                        <header class="flex justify-between items-start">
-                            ${gerarMiniPlacaHTML(v.placa)}
-                            <div class="text-right flex flex-col items-end gap-1">
-                                <span class="text-[9px] font-black uppercase px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 border dark:border-slate-700">${v.status}</span>
-                                <span class="text-[9px] font-bold px-1.5 bg-blue-50 dark:bg-blue-900/30 text-blue-600 rounded">${v.prioridade}</span>
+                        <div class="space-y-3">
+                            <header class="flex justify-between items-start">
+                                ${gerarMiniPlacaHTML(v.placa)}
+                                <div class="text-right flex flex-col items-end gap-1">
+                                    <span class="text-[9px] font-black uppercase px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 border dark:border-slate-700">${v.status}</span>
+                                    <span class="text-[9px] font-bold px-1.5 bg-blue-50 dark:bg-blue-900/30 text-blue-600 rounded">${v.prioridade}</span>
+                                </div>
+                            </header>
+                            <div class="grid grid-cols-2 gap-2 text-xs">
+                                <div><p class="text-slate-400">Cliente</p><p class="font-bold truncate text-slate-800 dark:text-slate-100">${v.cliente}</p></div>
+                                <div><p class="text-slate-400">Veículo</p><p class="font-bold truncate text-slate-800 dark:text-slate-100">${v.modelo}</p></div>
+                                <div><p class="text-slate-400"><i class="fa-solid fa-user-gear"></i> Mecânico</p><p class="font-semibold text-blue-600 truncate">${v.mecanico}</p></div>
+                                <div><p class="text-slate-400">Pendente</p><p class="font-bold ${pendente > 0 ? 'text-red-500' : 'text-emerald-500'}">R$ ${pendente.toFixed(2)}</p></div>
                             </div>
-                        </header>
-                        <div class="grid grid-cols-2 gap-2 text-xs">
-                            <div><p class="text-slate-400">Cliente</p><p class="font-bold truncate">${v.cliente}</p></div>
-                            <div><p class="text-slate-400">Veículo</p><p class="font-bold truncate">${v.modelo}</p></div>
-                            <div><p class="text-slate-400"><i class="fa-solid fa-user-gear"></i> Mecânico</p><p class="font-semibold text-blue-600 truncate">${v.mecanico}</p></div>
-                            <div><p class="text-slate-400">Pendente</p><p class="font-bold ${pendente > 0 ? 'text-red-500' : 'text-emerald-500'}">R$ ${pendente.toFixed(2)}</p></div>
+                            <p class="text-xs text-slate-500 italic line-clamp-1 border-t dark:border-slate-800 pt-1">"${v.servico}"</p>
                         </div>
-                        <p class="text-xs text-slate-500 italic line-clamp-1 border-t dark:border-slate-800 pt-1">"${v.servico}"</p>
-                    </div>
-                    <footer class="grid grid-cols-5 gap-1 border-t dark:border-slate-800 pt-2 bg-slate-50/50 dark:bg-slate-800/10 -mx-4 -mb-4 p-2">
-                        <button onclick="visualizarOS(${v.id})" class="bg-white dark:bg-slate-800 border dark:border-slate-700 rounded py-1 text-center text-xs cursor-pointer" title="Visualizar Ordem"><i class="fa-solid fa-eye text-slate-500"></i></button>
-                        <button onclick="prepararEdicao(${v.id})" class="bg-white dark:bg-slate-800 border dark:border-slate-700 rounded py-1 text-center text-xs cursor-pointer" title="Editar Ordem"><i class="fa-solid fa-pen text-blue-500"></i></button>
-                        <button onclick="wppCliente(${v.id})" class="bg-emerald-600 text-white rounded py-1 text-center text-xs flex items-center justify-center gap-1 cursor-pointer" title="WhatsApp do Cliente"><i class="fa-brands fa-whatsapp"></i><span class="text-[9px]">Cli</span></button>
-                        <button onclick="wppMecanico(${v.id})" class="bg-blue-600 text-white rounded py-1 text-center text-xs flex items-center justify-center gap-1 cursor-pointer" title="WhatsApp do Mecânico"><i class="fa-brands fa-whatsapp"></i><span class="text-[9px]">Mec</span></button>
-                        <button onclick="excluirOS(${v.id})" class="bg-white dark:bg-slate-800 border dark:border-slate-700 rounded py-1 text-center text-xs cursor-pointer" title="Excluir"><i class="fa-solid fa-trash text-red-500"></i></button>
-                    </footer>
-                `;
+                        <footer class="grid grid-cols-5 gap-1.5 border-t dark:border-slate-800 pt-2 bg-slate-50/50 dark:bg-slate-800/10 -mx-4 -mb-4 p-2 rounded-b-2xl">
+                            <button onclick="visualizarOS(${v.id})" class="bg-white hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 border dark:border-slate-700 rounded-lg py-2 text-center text-xs cursor-pointer transition" title="Visualizar Ordem"><i class="fa-solid fa-eye text-slate-500"></i></button>
+                            <button onclick="prepararEdicao(${v.id})" class="bg-white hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 border dark:border-slate-700 rounded-lg py-2 text-center text-xs cursor-pointer transition" title="Editar Ordem"><i class="fa-solid fa-pen text-blue-500"></i></button>
+                            <button onclick="wppCliente(${v.id})" class="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg py-2 text-center text-xs flex items-center justify-center gap-1 cursor-pointer transition" title="WhatsApp do Cliente"><i class="fa-brands fa-whatsapp"></i><span class="text-[9px] font-bold hidden sm:inline">Cli</span></button>
+                            <button onclick="wppMecanico(${v.id})" class="bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-2 text-center text-xs flex items-center justify-center gap-1 cursor-pointer transition" title="WhatsApp do Mecânico"><i class="fa-brands fa-whatsapp"></i><span class="text-[9px] font-bold hidden sm:inline">Mec</span></button>
+                            <button onclick="excluirOS(${v.id})" class="bg-white hover:bg-red-50 dark:bg-slate-800 dark:hover:bg-red-950/20 border dark:border-slate-700 rounded-lg py-2 text-center text-xs cursor-pointer transition" title="Excluir"><i class="fa-solid fa-trash text-red-500"></i></button>
+                        </footer>
+                    `;
                 grid.appendChild(card);
             });
             atualizarEstatisticaRapida();
@@ -506,68 +954,70 @@
             const fMec = document.getElementById('relatorio-filtro-mec').value;
             const containerModal = document.getElementById('preview-relatorio-modal');
             const containerImpressao = document.getElementById('area-impressao-conteudo');
-            
+
             const filtrados = veiculos.filter(v => fMec === 'Todos' || v.mecanico === fMec);
 
-            let totalOrcado = 0, totalPago = 0, noPatio = 0;
+            let totalOrcado = 0,
+                totalPago = 0,
+                noPatio = 0;
             filtrados.forEach(v => {
-                totalOrcado += v.valorOrcamento;
-                totalPago += v.valorPago;
-                if(v.status !== 'Entregue' && v.status !== 'Cancelado') noPatio++;
+                totalOrcado += (v.valorOrcamento || 0);
+                totalPago += (v.valorPago || 0);
+                if (v.status !== 'Entregue' && v.status !== 'Cancelado') noPatio++;
             });
 
             const templateHTML = `
-                <div class="text-center border-b pb-4">
-                    <h2 class="text-xl font-bold tracking-tight text-slate-900">RELATÓRIO GERENCIAL DE FECHAMENTO</h2>
-                    <p class="text-xs text-slate-500 uppercase mt-1">Filtro Alocado: <strong>${fMec === 'Todos' ? 'Visão Geral da Empresa' : fMec}</strong></p>
-                    <p class="text-[10px] text-slate-400">Emissão Técnica em: ${new Date().toLocaleString('pt-BR')}</p>
-                </div>
-                <div class="grid grid-cols-4 gap-2 text-center mt-4">
-                    <div class="bg-slate-100 p-2 rounded"><p class="text-[10px] text-slate-500 font-bold uppercase">Ordens Alocadas</p><p class="text-lg font-black">${filtrados.length}</p></div>
-                    <div class="bg-slate-100 p-2 rounded"><p class="text-[10px] text-slate-500 font-bold uppercase">No Pátio Ativo</p><p class="text-lg font-black text-blue-600">${noPatio}</p></div>
-                    <div class="bg-slate-100 p-2 rounded"><p class="text-[10px] text-slate-500 font-bold uppercase">Total Orçado</p><p class="text-lg font-black text-slate-800">R$ ${totalOrcado.toFixed(2)}</p></div>
-                    <div class="bg-slate-100 p-2 rounded"><p class="text-[10px] text-slate-500 font-bold uppercase">Total Caixa Recebido</p><p class="text-lg font-black text-emerald-600">R$ ${totalPago.toFixed(2)}</p></div>
-                </div>
-                <div class="mt-4">
-                    <h3 class="text-xs font-bold text-slate-400 uppercase mb-2">Detalhamento Físico de Fluxo</h3>
-                    <table class="w-full text-left text-xs border-collapse">
-                        <thead>
-                            <tr class="bg-slate-900 text-white"><th class="p-2">Placa</th><th class="p-2">Cliente / Modelo</th><th class="p-2">Mecânico</th><th class="p-2">Status</th><th class="p-2 text-right">Valor OS</th></tr>
-                        </thead>
-                        <tbody class="divide-y">
-                            ${filtrados.map(v => `
-                                <tr>
-                                    <td class="p-2 font-mono font-bold">${v.placa}</td>
-                                    <td class="p-2"><strong>${v.cliente}</strong><br><span class="text-slate-500 text-[11px]">${v.modelo}</span></td>
-                                    <td class="p-2 text-slate-600">${v.mecanico}</td>
-                                    <td class="p-2"><span class="text-[10px] font-semibold">${v.status}</span></td>
-                                    <td class="p-2 text-right font-bold">R$ ${v.valorOrcamento.toFixed(2)}</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                </div>
-            `;
+                    <div class="text-center border-b pb-4 text-slate-950">
+                        <h2 class="text-xl font-bold tracking-tight">RELATÓRIO GERENCIAL DE FECHAMENTO</h2>
+                        <p class="text-xs text-slate-500 uppercase mt-1">Filtro Alocado: <strong>${fMec === 'Todos' ? 'Visão Geral da Empresa' : fMec}</strong></p>
+                        <p class="text-[10px] text-slate-400">Emissão Técnica em: ${new Date().toLocaleString('pt-BR')}</p>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center mt-4 text-slate-950">
+                        <div class="bg-slate-100 p-2 rounded"><p class="text-[10px] text-slate-500 font-bold uppercase">Ordens Alocadas</p><p class="text-lg font-black">${filtrados.length}</p></div>
+                        <div class="bg-slate-100 p-2 rounded"><p class="text-[10px] text-slate-500 font-bold uppercase">No Pátio Ativo</p><p class="text-lg font-black text-blue-600">${noPatio}</p></div>
+                        <div class="bg-slate-100 p-2 rounded"><p class="text-[10px] text-slate-500 font-bold uppercase">Total Orçado</p><p class="text-lg font-black text-slate-800">R$ ${totalOrcado.toFixed(2)}</p></div>
+                        <div class="bg-slate-100 p-2 rounded"><p class="text-[10px] text-slate-500 font-bold uppercase">Total Caixa Recebido</p><p class="text-lg font-black text-emerald-600">R$ ${totalPago.toFixed(2)}</p></div>
+                    </div>
+                    <div class="mt-4 text-slate-950 overflow-x-auto">
+                        <h3 class="text-xs font-bold text-slate-400 uppercase mb-2">Detalhamento Físico de Fluxo</h3>
+                        <table class="w-full text-left text-xs border-collapse min-w-[480px]">
+                            <thead>
+                                <tr class="bg-slate-900 text-white"><th class="p-2">Placa</th><th class="p-2">Cliente / Modelo</th><th class="p-2">Mecânico</th><th class="p-2">Status</th><th class="p-2 text-right">Valor OS</th></tr>
+                            </thead>
+                            <tbody class="divide-y">
+                                ${filtrados.map(v => `
+                                    <tr>
+                                        <td class="p-2 font-mono font-bold">${v.placa}</td>
+                                        <td class="p-2"><strong>${v.cliente}</strong><br><span class="text-slate-500 text-[11px]">${v.modelo}</span></td>
+                                        <td class="p-2 text-slate-600">${v.mecanico}</td>
+                                        <td class="p-2"><span class="text-[10px] font-semibold">${v.status}</span></td>
+                                        <td class="p-2 text-right font-bold">R$ ${(v.valorOrcamento || 0).toFixed(2)}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
 
             // Aloca simultaneamente nos dois containers
             containerModal.innerHTML = templateHTML;
             containerImpressao.innerHTML = templateHTML;
         }
 
-        // WhatsApp para o Mecânico (Envia os dados do veículo direcionado para ele)
+        // WhatsApp para o Mecânico (Dados individuais do veículo direcionado para ele)
         function wppMecanico(id) {
             const v = veiculos.find(v => v.id === id);
             const mec = mecanicos.find(m => m.nome === v.mecanico);
-            if(!v) return;
+            if (!v) return;
 
             const msg = `🔧 *SERVIÇO ALOCADO - PRESTADOR*\n\n` +
-                        `Olá *${v.mecanico}*, você possui uma OS sob sua responsabilidade:\n\n` +
-                        `*Veículo:* ${v.montadora} ${v.modelo} (${v.cor})\n` +
-                        `*Placa:* ${v.placa}\n` +
-                        `*Prioridade:* ${v.prioridade}\n` +
-                        `*Sintoma/Serviço:* ${v.servico}\n` +
-                        `*Prazo/Previsão:* ${formatarDataBR(v.previsao)}\n\n` +
-                        `_Por favor, atualize a equipe em caso de alteração no diagnóstico ou necessidade de novas peças._`;
+                `Olá *${v.mecanico}*, você possui uma OS sob sua responsabilidade:\n\n` +
+                `*Veículo:* ${v.montadora} ${v.modelo} (${v.cor})\n` +
+                `*Placa:* ${v.placa}\n` +
+                `*Prioridade:* ${v.prioridade}\n` +
+                `*Sintoma/Serviço:* ${v.servico}\n` +
+                `*Prazo/Previsão:* ${formatarDataBR(v.previsao)}\n\n` +
+                `_Por favor, atualize a equipe em caso de alteração no diagnóstico ou necessidade de novas peças._`;
 
             const fone = mec && mec.telefone ? mec.telefone.replace(/\D/g, '') : '';
             window.open(`https://api.whatsapp.com/send?phone=55${fone}&text=${encodeURIComponent(msg)}`, '_blank');
@@ -576,43 +1026,45 @@
         // WhatsApp para o Cliente com mensagem reformulada e data local formatada
         function wppCliente(id) {
             const v = veiculos.find(v => v.id === id);
-            if(!v) return;
+            if (!v) return;
 
             const previsaoFormatada = formatarDataBR(v.previsao);
 
             const msg = `🚗 *ACOMPANHAMENTO DE SERVIÇO - AUTO GESTÃO*\n\n` +
-                        `Olá *${v.cliente}*,  :\n\n` +
-                        `Temos novidades sobre a manutenção do seu veículo!\n\n` +
-                        `*Veículo:* ${v.modelo}\n` +
-                        `*Placa:* ${v.placa}\n` +
-                        `*Status Atual:* _${v.status}_\n` +
-                        `*Responsável Técnico:* ${v.mecanico}\n` +
-                        `*Previsão de Entrega:* ${previsaoFormatada}\n\n` +
-                        `Se tiver qualquer dúvida ou precisar de informações adicionais, estamos à disposição!`;
+                `Olá *${v.cliente}*,\n\n` +
+                `Temos novidades sobre a manutenção do seu veículo!\n\n` +
+                `*Veículo:* ${v.modelo}\n` +
+                `*Placa:* ${v.placa}\n` +
+                `*Status:* _${v.status}_\n` +
+                `*Responsável Técnico:* ${v.mecanico}\n` +
+                `*Previsão de Entrega:* ${previsaoFormatada}\n\n` +
+                `Se tiver qualquer dúvida ou precisar de informações adicionais, estamos à disposição!`;
 
-            window.open(`https://api.whatsapp.com/send?phone=55${v.telefone.replace(/\D/g, '')}&text=${encodeURIComponent(msg)}`, '_blank');
+            window.open(
+                `https://api.whatsapp.com/send?phone=55${v.telefone.replace(/\D/g, '')}&text=${encodeURIComponent(msg)}`,
+                '_blank');
         }
 
         function visualizarOS(id) {
             const v = veiculos.find(v => v.id === id);
-            if(!v) return;
+            if (!v) return;
             const previewModal = document.getElementById('preview-individual-modal');
             const containerImpressao = document.getElementById('area-impressao-conteudo');
-            
+
             const templateHTML = `
-                <div class="border-b-2 pb-2 flex justify-between items-center">
-                    <div><h2 class="text-lg font-bold text-slate-900">ORDEM DE MANUTENÇÃO</h2><p class="text-[10px] text-slate-400">Cod #${v.id}</p></div>
-                    ${gerarMiniPlacaHTML(v.placa)}
-                </div>
-                <div class="text-xs space-y-2 pt-2 text-slate-800">
-                    <p><strong>Cliente:</strong> ${v.cliente} | <strong>Contato:</strong> ${v.telefone}</p>
-                    <p><strong>Veículo:</strong> ${v.montadora} ${v.modelo} - Ano ${v.ano || '--'} | <strong>KM:</strong> ${v.km || '--'}</p>
-                    <p><strong>Responsável Técnico:</strong> ${v.mecanico}</p>
-                    <p><strong>Sintomas Relatados:</strong> ${v.servico}</p>
-                    <p class="bg-slate-100 p-2 rounded font-mono text-[11px] border"><strong>Observações de Oficina:</strong><br>${v.obs || 'Nenhuma'}</p>
-                </div>
-            `;
-            
+                    <div class="border-b-2 pb-2 flex justify-between items-center text-slate-950">
+                        <div><h2 class="text-lg font-bold">ORDEM DE MANUTENÇÃO</h2><p class="text-[10px] text-slate-400">Cod #${v.id}</p></div>
+                        ${gerarMiniPlacaHTML(v.placa)}
+                    </div>
+                    <div class="text-xs space-y-2 pt-2 text-slate-800">
+                        <p><strong>Cliente:</strong> ${v.cliente} | <strong>Contato:</strong> ${v.telefone}</p>
+                        <p><strong>Veículo:</strong> ${v.montadora} ${v.modelo} - Ano ${v.ano || '--'} | <strong>KM:</strong> ${v.km || '--'}</p>
+                        <p><strong>Responsável Técnico:</strong> ${v.mecanico}</p>
+                        <p><strong>Sintomas Relatados:</strong> ${v.servico}</p>
+                        <p class="bg-slate-100 p-2 rounded font-mono text-[11px] border"><strong>Observações de Oficina:</strong><br>${v.obs || 'Nenhuma'}</p>
+                    </div>
+                `;
+
             previewModal.innerHTML = templateHTML;
             containerImpressao.innerHTML = templateHTML; // Insere na div de impressão real
             document.getElementById('modal-visualizacao').classList.remove('hidden');
@@ -624,7 +1076,7 @@
 
         function prepararEdicao(id) {
             const v = veiculos.find(v => v.id === id);
-            if(!v) return;
+            if (!v) return;
             abrirModal();
             document.getElementById('veiculo-id').value = v.id;
             document.getElementById('input-cliente').value = v.cliente;
@@ -641,53 +1093,80 @@
             document.getElementById('input-previsao').value = v.previsao || '';
             document.getElementById('input-status').value = v.status;
             document.getElementById('input-prioridade').value = v.prioridade;
-            document.getElementById('input-valor-orcamento').value = v.valorOrcamento || '';
-            document.getElementById('input-valor-pago').value = v.valorPago || '';
+
+            // Exibe os valores com a pontuação de moeda correta nos inputs ao editar
+            document.getElementById('input-valor-orcamento').value = formatarNumeroParaInput(v.valorOrcamento);
+            document.getElementById('input-valor-pago').value = formatarNumeroParaInput(v.valorPago);
+
             document.getElementById('input-servico').value = v.servico;
             document.getElementById('input-obs').value = v.obs || '';
             inputPlaca.dispatchEvent(new Event('input'));
         }
 
-        function excluirOS(id) { if(confirm("Remover permanentemente esta Ordem?")) { veiculos = veiculos.filter(v => v.id !== id); localStorage.setItem('mini_erp_oficina_dados', JSON.stringify(veiculos)); renderizarCards(); } }
-        
+        function excluirOS(id) { if (confirm("Remover permanentemente esta Ordem?")) { veiculos = veiculos.filter(v => v.id !==
+                    id);
+                localStorage.setItem('mini_erp_oficina_dados', JSON.stringify(veiculos));
+                renderizarCards(); } }
+
         function atualizarEstatisticaRapida() {
-            document.getElementById('stat-total').innerText = veiculos.filter(v => v.status !== 'Entregue' && v.status !== 'Cancelado').length;
+            document.getElementById('stat-total').innerText = veiculos.filter(v => v.status !== 'Entregue' && v.status !==
+                'Cancelado').length;
             document.getElementById('stat-execucao').innerText = veiculos.filter(v => v.status === 'Em Execução').length;
             document.getElementById('stat-pecas').innerText = veiculos.filter(v => v.status === 'Aguardando Peças').length;
-            document.getElementById('stat-prontos').innerText = veiculos.filter(v => v.status === 'Pronto para Entrega').length;
+            document.getElementById('stat-prontos').innerText = veiculos.filter(v => v.status === 'Pronto para Entrega')
+                .length;
             document.getElementById('stat-entregues').innerText = veiculos.filter(v => v.status === 'Entregue').length;
         }
 
         // Abre o modal de cadastro e corrige o fuso horário da data de hoje
-        function abrirModal() { 
-            formVeiculo.reset(); 
-            document.getElementById('veiculo-id').value = ''; 
-            
+        function abrirModal() {
+            formVeiculo.reset();
+            document.getElementById('veiculo-id').value = '';
+
             // Correção da data de entrada local (evitando adiantamento de fuso horário UTC)
             const hojeLocal = new Date();
             const ano = hojeLocal.getFullYear();
             const mes = String(hojeLocal.getMonth() + 1).padStart(2, '0');
             const dia = String(hojeLocal.getDate()).padStart(2, '0');
             const dataCorreta = `${ano}-${mes}-${dia}`;
-            
-            document.getElementById('input-entrada').value = dataCorreta; 
-            document.getElementById('modal-cadastro').classList.remove('hidden'); 
+
+            document.getElementById('input-entrada').value = dataCorreta;
+            document.getElementById('modal-cadastro').classList.remove('hidden');
         }
 
         function fecharModal() { document.getElementById('modal-cadastro').classList.add('hidden'); }
-        function abrirModalMecanicos() { renderizarMecanicos(); document.getElementById('modal-mecanicos').classList.remove('hidden'); }
+
+        function abrirModalMecanicos() { renderizarMecanicos();
+            document.getElementById('modal-mecanicos').classList.remove('hidden'); }
+
         function fecharModalMecanicos() { document.getElementById('modal-mecanicos').classList.add('hidden'); }
-        function abrirModalRelatorios() { gerarPainelRelatorio(); document.getElementById('modal-relatorios').classList.remove('hidden'); }
+
+        function abrirModalRelatorios() { gerarPainelRelatorio();
+            document.getElementById('modal-relatorios').classList.remove('hidden'); }
+
         function fecharModalRelatorios() { document.getElementById('modal-relatorios').classList.add('hidden'); }
-        function alternarTema() { const d = document.documentElement.classList.toggle('dark'); localStorage.setItem('tema_escuro', d); document.getElementById('icone-tema').className = d ? "fa-solid fa-sun text-amber-400" : "fa-solid fa-moon"; }
+
+        function alternarTema() { const d = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('tema_escuro', d);
+            document.getElementById('icone-tema').className = d ? "fa-solid fa-sun text-amber-400" :
+                "fa-solid fa-moon"; }
 
         function exportarBackup() {
             const blob = new Blob([JSON.stringify(veiculos)], { type: 'application/json' });
-            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `backup_oficina.json`; a.click();
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `backup_oficina.json`;
+            a.click();
         }
+
         function importarBackup(e) {
-            const f = e.target.files[0]; if (!f) return;
-            const reader = new FileReader(); reader.onload = function(evt) { veiculos = JSON.parse(evt.target.result); localStorage.setItem('mini_erp_oficina_dados', JSON.stringify(veiculos)); renderizarCards(); }; reader.readAsText(f);
+            const f = e.target.files[0];
+            if (!f) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) { veiculos = JSON.parse(evt.target.result);
+                localStorage.setItem('mini_erp_oficina_dados', JSON.stringify(veiculos));
+                renderizarCards(); };
+            reader.readAsText(f);
         }
 
         // Inicialização
