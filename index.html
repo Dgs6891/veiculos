@@ -37,23 +37,26 @@
         .mini-placa-header { background-color: #003399; height: 11px; display: flex; align-items: center; justify-content: space-between; padding: 0 4px; color: #fff; font-size: 5px; font-weight: bold; }
         .mini-placa-body { flex: 1; display: flex; align-items: center; justify-content: center; background: #fff; font-family: 'Courier New', Courier, monospace; font-size: 13px; font-weight: 900; color: #000; letter-spacing: 0.5px; }
 
-        /* AJUSTE E CORREÇÃO DE IMPRESSÃO */
+        /* CORREÇÃO DEFINITIVA DE IMPRESSÃO (SEM PÁGINAS EM BRANCO) */
         @media print {
-            body * { visibility: hidden !important; }
-            #area-impressao-global, #area-impressao-global * { visibility: visible !important; }
+            body > *:not(#area-impressao-global) {
+                display: none !important;
+            }
             #area-impressao-global {
+                display: block !important;
                 position: absolute;
                 left: 0;
                 top: 0;
                 width: 100%;
                 background: white !important;
                 color: black !important;
-                box-shadow: none !important;
+                padding: 0 !important;
                 margin: 0 !important;
-                padding: 10px !important;
             }
-            /* Remove cabeçalhos e rodapés automáticos do navegador nas páginas */
-            @page { size: auto; margin: 10mm 15mm 10mm 15mm; }
+            @page { 
+                size: portrait; 
+                margin: 1.5cm; 
+            }
         }
     </style>
 </head>
@@ -268,7 +271,7 @@
         </div>
     </div>
 
-    <!-- ÁREA DE IMPRESSÃO GLOBAL UNIFICADA (Invisível no painel da tela, visível apenas no motor do navegador ao imprimir) -->
+    <!-- ÁREA DE IMPRESSÃO GLOBAL UNIFICADA (Visível exclusivamente ao disparar o Window.print()) -->
     <div id="area-impressao-global" class="hidden">
         <div id="area-impressao-conteudo"></div>
     </div>
@@ -288,6 +291,14 @@
         const placaTopo = document.getElementById('placaTopo');
         const txtMercosul = document.getElementById('txtMercosul');
         const tagBr = document.getElementById('tagBr');
+
+        // Função utilitária para formatar datas (AAAA-MM-DD -> DD/MM/AAAA)
+        function formatarDataBR(dataString) {
+            if (!dataString) return 'Não Informada';
+            const partes = dataString.split('-');
+            if (partes.length !== 3) return dataString;
+            return `${partes[2]}/${partes[1]}/${partes[0]}`;
+        }
 
         // Gerenciamento e Mascaramento Inteligente do Input de Placas
         inputPlaca.addEventListener('input', (e) => {
@@ -555,21 +566,30 @@
                         `*Placa:* ${v.placa}\n` +
                         `*Prioridade:* ${v.prioridade}\n` +
                         `*Sintoma/Serviço:* ${v.servico}\n` +
-                        `*Prazo/Previsão:* ${v.previsao || 'Não Informada'}\n\n` +
+                        `*Prazo/Previsão:* ${formatarDataBR(v.previsao)}\n\n` +
                         `_Por favor, atualize a equipe em caso de alteração no diagnóstico ou necessidade de novas peças._`;
 
             const fone = mec && mec.telefone ? mec.telefone.replace(/\D/g, '') : '';
             window.open(`https://api.whatsapp.com/send?phone=55${fone}&text=${encodeURIComponent(msg)}`, '_blank');
         }
 
+        // WhatsApp para o Cliente com mensagem reformulada e data local formatada
         function wppCliente(id) {
             const v = veiculos.find(v => v.id === id);
             if(!v) return;
-            const msg = `🚗 *ATUALIZAÇÃO DE MONITORAMENTO DE VEÍCULO*\n\n` +
-                        `Olá *${v.cliente}*,\n` +
-                        `O status atual do seu *${v.modelo}* (Placa: ${v.placa}) na nossa oficina é: *${v.status}*.\n\n` +
-                        `Responsável Técnico: ${v.mecanico}\n` +
-                        `Previsão Estimada: ${v.previsao || 'Sob Análise'}`;
+
+            const previsaoFormatada = formatarDataBR(v.previsao);
+
+            const msg = `🚗 *ACOMPANHAMENTO DE SERVIÇO - AUTO GESTÃO*\n\n` +
+                        `Olá *${v.cliente}*,\n\n` +
+                        `Temos novidades sobre a manutenção do seu veículo!\n\n` +
+                        `*Veículo:* ${v.modelo}\n` +
+                        `*Placa:* ${v.placa}\n` +
+                        `*Status Atual:* _${v.status}_\n` +
+                        `*Responsável Técnico:* ${v.mecanico}\n` +
+                        `*Previsão de Entrega:* ${previsaoFormatada}\n\n` +
+                        `Se tiver qualquer dúvida ou precisar de informações adicionais, estamos à disposição!`;
+
             window.open(`https://api.whatsapp.com/send?phone=55${v.telefone.replace(/\D/g, '')}&text=${encodeURIComponent(msg)}`, '_blank');
         }
 
@@ -594,7 +614,7 @@
             `;
             
             previewModal.innerHTML = templateHTML;
-            containerImpressao.innerHTML = templateHTML; // Insere de forma exclusiva na div de impressão real
+            containerImpressao.innerHTML = templateHTML; // Insere na div de impressão real
             document.getElementById('modal-visualizacao').classList.remove('hidden');
         }
 
@@ -638,7 +658,22 @@
             document.getElementById('stat-entregues').innerText = veiculos.filter(v => v.status === 'Entregue').length;
         }
 
-        function abrirModal() { formVeiculo.reset(); document.getElementById('veiculo-id').value = ''; document.getElementById('input-entrada').value = new Date().toISOString().slice(0, 10); document.getElementById('modal-cadastro').classList.remove('hidden'); }
+        // Abre o modal de cadastro e corrige o fuso horário da data de hoje
+        function abrirModal() { 
+            formVeiculo.reset(); 
+            document.getElementById('veiculo-id').value = ''; 
+            
+            // Correção da data de entrada local (evitando adiantamento de fuso horário UTC)
+            const hojeLocal = new Date();
+            const ano = hojeLocal.getFullYear();
+            const mes = String(hojeLocal.getMonth() + 1).padStart(2, '0');
+            const dia = String(hojeLocal.getDate()).padStart(2, '0');
+            const dataCorreta = `${ano}-${mes}-${dia}`;
+            
+            document.getElementById('input-entrada').value = dataCorreta; 
+            document.getElementById('modal-cadastro').classList.remove('hidden'); 
+        }
+
         function fecharModal() { document.getElementById('modal-cadastro').classList.add('hidden'); }
         function abrirModalMecanicos() { renderizarMecanicos(); document.getElementById('modal-mecanicos').classList.remove('hidden'); }
         function fecharModalMecanicos() { document.getElementById('modal-mecanicos').classList.add('hidden'); }
